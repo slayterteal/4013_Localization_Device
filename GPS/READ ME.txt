@@ -1,0 +1,3 @@
+Short explaination.
+
+Code mostly works, gets lat/long/time/satellites. However, not sure how to get elevation and also having issues with writing files atm, shortcutted fixing something with the rest of the code by using "sudo" which is bricking the write to file part. Additionally about 1/3 the time the gps module just decides to not work and restarting the pi eventually fixes it.
