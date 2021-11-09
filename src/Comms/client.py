@@ -5,15 +5,16 @@
 import asyncio
 import websockets
 
-async def hello():
-    uri = "ws://localhost:8765"
-    async with websockets.connect(uri) as websocket:
-        name = input("What's your name? ")
+server_ip = "ws://localhost:8000"
 
-        await websocket.send(name)
-        print(f">>> {name}")
-
+async def poll_for_localization_data(websocket):
+    while True:
         greeting = await websocket.recv()
-        print(f"<<< {greeting}")
+        print(f"<<< Returned Data {greeting}")
 
-asyncio.run(hello())
+async def run():
+    async with websockets.connect(server_ip) as websocket:
+        await poll_for_localization_data(websocket)
+
+asyncio.run(run())
+
