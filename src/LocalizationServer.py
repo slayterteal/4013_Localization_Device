@@ -6,6 +6,7 @@ import asyncio
 import websockets
 import glob
 import threading
+from GPS import getGPSData
 
 STORAGE_LOCATION = glob.glob("/media/pi/*")
 
@@ -64,3 +65,4 @@ async_thread.start()
 server_thread.start()
 print("Threads are running.")
 
+diff --git a/src/LocalizationClient.py b/src/LocalizationClient.py
