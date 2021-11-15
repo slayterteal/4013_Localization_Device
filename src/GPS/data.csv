@@ -1,4 +1,4 @@
-NMEA code for Global Positioning System Fix Data,time,latitude,N,Latitude,W,GPS fix,satellite count,Horizontal dilution of position,Altitide (meters),Height of Geoid (mean sea level),Time(sec) since last DGPS update,DGPS station ID number,,check sum
+NMEA code for Global Positioning System Fix Data,time,latitude,N,Latitude,W,GPS fix,satellite count,Horizontal dilution of position,Altitide,,Height of geoid,,,check sum
 ['$GPGGA',212039.00',3607.20090',N',09703.82987',W',1',03',2.26',255.9',M',-26.1',M',',*6B\r\n']
 ['$GPGGA',212040.00',3607.20090',N',09703.82983',W',1',03',2.26',255.5',M',-26.1',M',',*6D\r\n']
 ['$GPGGA',212041.00',3607.20085',N',09703.82981',W',1',03',2.26',255.5',M',-26.1',M',',*6A\r\n']
