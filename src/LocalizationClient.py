@@ -4,13 +4,13 @@ import asyncio
 import websockets
 import serial
 
-SERVER_IP = "ws://10.8.62.90:8000"
-SERIAL_PORT = serial.Serial('COM5', 9600, timeout=1)
+SERVER_IP = "ws://localhost:6969"
+# SERIAL_PORT = serial.Serial('COM5', 9600, timeout=1)
 
 async def poll_for_localization_data(websocket):
     while True:
-        greeting = await websocket.recv()
-        print(f"<<< Returned Data {greeting}")
+        dataFromServer = await websocket.recv()
+        print(f"<<< Returned Data {dataFromServer}")
 
 async def connect():
     async with websockets.connect(SERVER_IP) as websocket:
@@ -18,7 +18,8 @@ async def connect():
 
 async def pollSerial():
     while True:
-        data = SERIAL_PORT.readline()
+        data = "testing data"
+        # data = SERIAL_PORT.readline()
         if len(data) >= 1:
             print(data.decode("utf-8"))
 

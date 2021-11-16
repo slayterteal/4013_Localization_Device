@@ -7,7 +7,7 @@ def parseGPS(data):
     if data[0:6] == "$GPGGA": #other NMEA headers have info, but this header contains all the stuff we want
         s = data.split(",")
         if s[7] == '0' or s[7]=='00':
-            print ("no satellite data available")
+            print ("no satellite data available: ", s[1])
             return
         #print("satellite(s): ", s[7])
 
@@ -15,17 +15,24 @@ def parseGPS(data):
         #time = s[1][0:2] + ":" + s[1][2:4] + ":" + s[1][4:6]
         #s[1] = time
         
-        print(s)
+        #print(s)
 
-        return
+        return data
 
 ser = serial.Serial(mport,9600,timeout = 2)
 
-while True:
-#for x in range(20):
-    try:
-        dat = ser.readline().decode()
-        parseGPS(dat)
-    except:
-        pass
-        #print("error")
+def getGPSData():
+        try:
+                
+                dat = ser.readline().decode()
+                return parseGPS(dat)
+        except KeyboardInterrupt:
+                print("Exiting")
+                exit()
+        except Exception as e:
+                print("Error: ", e)
+                pass
+         
+if __name__ == "__main__":
+        while True:
+                getGPSData()

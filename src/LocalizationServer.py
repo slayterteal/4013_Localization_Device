@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
-# WS server example
-
-import asyncio
 import websockets
+import asyncio
 import glob
 import threading
 import serial
@@ -26,7 +24,7 @@ async def send(websocket, path):
 
 async def handle_connection():
     print("handle_connection is being called...")
-    async with websockets.serve(send, 8000): 
+    async with websockets.serve(send, "localhost", 6969): 
         print("waiting for connections...")
         await asyncio.Future()
 
@@ -47,15 +45,16 @@ async def handle_data():
 
 async def getData():
     # gps_data = getGPSData()
-    imu_data = getIMUData()
+    imu_data = "getIMUData()"
     return imu_data
 
 async def sendSerial(message):
-    port = serial.Serial('/dev/ttyAMA1', 9600) # TODO: make sure this doesn't need to be changed!!
-    byte_message = bytes(message, 'utf-8')
-    port.write(byte_message)
-    port.close()
-
+    #port = serial.Serial('/dev/serial1', 9600) # TODO: make sure this doesn't need to be changed!!
+    #byte_message = bytes(message, 'utf-8')
+    #port.write(byte_message)
+    #port.close()
+    print("Sent Data via Serial")
+    
 async def store_to_sd(data):
     await write_to_sd(data)
 
