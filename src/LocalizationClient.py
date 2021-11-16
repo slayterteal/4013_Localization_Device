@@ -3,9 +3,10 @@
 import asyncio
 import websockets
 import serial
+import threading
 
 SERVER_IP = "ws://localhost:6969"
-# SERIAL_PORT = serial.Serial('COM5', 9600, timeout=1)
+SERIAL_PORT = serial.Serial('COM5', 9600, timeout=1)
 
 async def poll_for_localization_data(websocket):
     while True:
@@ -16,20 +17,21 @@ async def connect():
     async with websockets.connect(SERVER_IP) as websocket:
         await poll_for_localization_data(websocket)
 
-async def pollSerial():
+def handle_server():
+    asyncio.run(connect())
+
+def pollSerial():
     while True:
-        data = "testing data"
-        # data = SERIAL_PORT.readline()
+        data = SERIAL_PORT.readline()
         if len(data) >= 1:
-            print(data.decode("utf-8"))
+            str_data = data.decode("utf-8")
+            print(f'Serial Data: {str_data}')
 
-async def run():
-    event_loop = asyncio.get_event_loop()
-    event_loop.create_task(connect())
-    event_loop.create_tast(pollSerial())
-    event_loop.run_forever()
+wireless = threading.Thread(target=handle_server)
+serial_comm = threading.Thread(target=pollSerial)
 
-# asyncio.run(run())
+wireless.start()
+serial_comm.start()
 
-asyncio.run(connect())
+
 

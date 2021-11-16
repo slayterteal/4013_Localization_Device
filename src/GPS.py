@@ -1,33 +1,26 @@
-import serial #pip install pyserial
-import time
+import serial 
 
-mport = "/dev/serial0" #magic serial location of stuff
+port = "/dev/serial0" 
+ser = serial.Serial(port,9600,timeout = 2)
 
 def parseGPS(data):
-    if data[0:6] == "$GPGGA": #other NMEA headers have info, but this header contains all the stuff we want
+    if data[0:6] == "$GPGSV": # other NMEA headers have info, but this header contains all the stuff we want
         s = data.split(",")
-        if s[7] == '0' or s[7]=='00':
-            print ("no satellite data available: ", s[1])
-            return
-        #print("satellite(s): ", s[7])
-
-        #uncomment if we dont want time in seconds only
-        #time = s[1][0:2] + ":" + s[1][2:4] + ":" + s[1][4:6]
-        #s[1] = time
-        
-        #print(s)
-
+        # if s[7] == '0' or s[7]=='00':
+        #     # print(str(s)) # For print RAW for debugging
+        #     return "No satellite data available."
         return data
-
-ser = serial.Serial(mport,9600,timeout = 2)
+    else:
+        return "No satellite data available."
 
 def getGPSData():
-        try:
-                
+        try: 
                 dat = ser.readline().decode()
-                return parseGPS(dat)
+                # print(f'unparsed data: {dat}')
+                print(parseGPS(dat))
+                # return parseGPS(dat)
         except KeyboardInterrupt:
-                print("Exiting")
+                print("\nExiting")
                 exit()
         except Exception as e:
                 print("Error: ", e)
