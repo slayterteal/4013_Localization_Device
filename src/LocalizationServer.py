@@ -6,7 +6,8 @@ import glob
 import threading
 import serial
 from os.path import exists
-# from imu import getIMUData
+from imu import getIMUData
+from GPS import getGPSData
 
 STORAGE_LOCATIONS = glob.glob("/media/pi/*")
 
@@ -39,16 +40,15 @@ async def handle_data():
         await sendSerial(localization_data)
 
 async def getData():
-    # gps_data = getGPSData()
-    imu_data = "getIMUData()"
+    gps_data = getGPSData()
+    imu_data = getIMUData()
     return imu_data
 
 async def sendSerial(message):
-    #port = serial.Serial('/dev/ttyAMA1', 9600) # TODO: make sure this doesn't need to be changed!!
-    #byte_message = bytes(message, 'utf-8')
-    #port.write(byte_message)
-    #port.close()
-    print("Sent Data via Serial")
+    port = serial.Serial('/dev/ttyAMA1', 9600) # TODO: make sure this doesn't need to be changed!!
+    byte_message = bytes(message, 'utf-8')
+    port.write(byte_message)
+    port.close()
 
 async def write_to_sd(data):
     if(len(STORAGE_LOCATIONS) == 0):
