@@ -9,7 +9,7 @@ sensor = bno055(i2c)
 
 def getIMUData():
 
-    fields = "X Gyro,Y Gyro,Z Gyro,X Accel,Y Accel,Z Accel,X Mag,Y Mag,Z Mag\n"
+    # fields = "X Gyro,Y Gyro,Z Gyro,X Accel,Y Accel,Z Accel,X Mag,Y Mag,Z Mag\n"
         
     # Sensor data rows for Gyro, Linear Acceleration, and Magnetic Field
     gyro = list(sensor.gyro)
@@ -33,8 +33,9 @@ def getIMUData():
         else:
             magString += str(mag[i])
     
-    final = fields + gyroString + lin_accString + magString + "\n"
+    final = gyroString + lin_accString + magString 
     return final
-    
-for i in range(20):
-    print(getIMUData())
+
+if __name__ == "__main__":
+    for i in range(1000):
+        print(getIMUData())
